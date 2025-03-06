@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Browse and Manage Orders</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="header-link">
+      <h1>Browse and Manage Orders</h1>
+    </a>
+  </header>
+  <nav class="nav-links">
+    <a href="/orders" class="nav-button">Orders</a>
+    <a href="/customers" class="nav-button">Customers</a>
+    <a href="/shipments" class="nav-button">Shipments</a>
+    <a href="/spice_silos" class="nav-button">Spice Silos</a>
+    <a href="/harvesters" class="nav-button">Harvesters</a>
+  </nav>
+  <section>
+    <h2>Existing Orders</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Order Date</th>
+          <th>Total Quantity</th>
+          <th>Order Status</th>
+          <th>Destination</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Edric</td>
+          <td>0189-11-02</td>
+          <td>276</td>
+          <td>Completed</td>
+          <td>1 Via Ludus, Wallach IX</td>
+          <td>
+            <button onclick="editRecord('order', 1)">Edit</button>
+            <button onclick="deleteRecord('order', 1)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Gaius Helen Mohiam</td>
+          <td>0189-11-03</td>
+          <td>490</td>
+          <td>Partially Fulfilled</td>
+          <td>782 Imperial Blvd, Corrinth City, Kaitain 90742</td>
+          <td>
+            <button onclick="editRecord('order', 1)">Edit</button>
+            <button onclick="deleteRecord('order', 1)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Edric</td>
+          <td>0189-11-05</td>
+          <td>394</td>
+          <td>Pending</td>
+          <td>2561 Guild Ln, Junction, Tupile 678911</td>
+          <td>
+            <button onclick="editRecord('order', 1)">Edit</button>
+            <button onclick="deleteRecord('order', 1)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Add New Order</h2>
+    <form id="orderForm">
+      <label for="customer_id">Customer (Optional):</label>
+      <select id="customer_id" name="customer_id">
+        <option value="">--Select Customer--</option>
+        <option value="1">Edric</option>
+        <option value="2">Gaius Helen Mohiam</option>
+        <option value="3">Count Fenring</option>
+        <option value="4">Thufir Hawat</option>
+      </select><br><br>
+      
+      <label for="order_date">Order Date:</label>
+      <input type="date" id="order_date" name="order_date" required><br><br>
+      
+      <label for="total_quantity">Total Quantity:</label>
+      <input type="number" id="total_quantity" name="total_quantity" required><br><br>
+      
+      <label for="order_status">Order Status:</label>
+      <select id="order_status" name="order_status" required>
+        <option value="Pending">Pending</option>
+        <option value="Partially Fulfilled">Partially Fulfilled</option>
+        <option value="Completed">Completed</option>
+      </select><br><br>
+      
+      <label for="destination">Destination:</label>
+      <input type="text" id="destination" name="destination" required><br><br>
+      
+      <button type="submit">Add Order</button>
+    </form>
+  </section>
+  <script>
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('New order submitted (this is a static demo).');
+    });
+
+    function editRecord(recordType, id) {
+      alert("Edit " + recordType + " record with id " + id + " (static demo).");
+    }
+    
+    function deleteRecord(recordType, id) {
+      alert("Delete " + recordType + " record with id " + id + " (static demo).");
+    }
+  </script>
+</body>
+</html>

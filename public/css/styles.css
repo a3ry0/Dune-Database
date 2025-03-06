@@ -1,0 +1,160 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #3D2D1C;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Header styling */
+header {
+  background: #68AEC9;
+  color: #3576AE;
+  padding: 10px 0;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  text-align: center;
+}
+
+/* Hover effect for better UX */
+.header-link:hover h1 {
+  color: #8c5c10;
+  transition: color 0.3s ease;
+}
+
+
+/* Navigation styling */
+nav ul {
+  list-style: none;
+  text-align: center;
+  padding: 10px 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #3D2D1C;
+  font-weight: bold;
+}
+
+nav ul li a:hover {
+  color: 	#B9935A;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  padding: 0;
+}
+
+.nav-links li {
+  display: inline-block;
+}
+
+.nav-button {
+  background-color: #8c5c10; 
+  color: #fff;              
+  padding: 5px 16px;          
+  text-decoration: none;  
+  border-radius: 4px;     
+  font-weight: bold;   
+  transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: #B9935A; 
+}
+
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Button styling */
+button {
+  background-color: #68AEC9;
+  color: #ffffff;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  margin: 5px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background: #3576AE;
+}
+
+/* Form styling */
+form {
+  background: #fff;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #C76D24; 
+  outline: none;
+  box-shadow: 0 0 8px rgba(199, 109, 36, 0.7);
+  color: #E5C185;
+  transition: all 0.3s ease-in-out;
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(229, 193, 133, 0.6);
+}
+

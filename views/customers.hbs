@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Browse and Manage Customers</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="header-link">
+      <h1>Browse and Manage Customers</h1>
+    </a>
+  </header>
+  <nav class="nav-links">
+    <a href="/orders" class="nav-button">Orders</a>
+    <a href="/customers" class="nav-button">Customers</a>
+    <a href="/shipments" class="nav-button">Shipments</a>
+    <a href="/spice_silos" class="nav-button">Spice Silos</a>
+    <a href="/harvesters" class="nav-button">Harvesters</a>
+  </nav>
+
+  <section>
+    <h2>Existing Customers</h2>
+    <table border="1" id="Customers-table">
+      <thead>
+        <tr>
+          <th>Customer ID</th>
+          <th>Name</th>
+          <th>Planet</th>
+          <th>Affiliation</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+        <tr data-value="{{this.customer_id}}">
+          <td>{{this.customer_id}}</td>
+          <td>{{this.name}}</td>
+          <td>{{this.planet}}</td>
+          <td>{{this.affiliation}}</td>
+          <td>
+            <button onclick="editCustomer({{this.customer_id}})">Edit</button>
+            <button onclick="deleteCustomer({{this.customer_id}})">Delete</button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Add New Customer</h2>
+    <form id="add-customer-form-ajax">
+      <label for="input-name">Name:</label>
+      <input type="text" id="input-name" name="name" required><br><br>
+
+      <label for="input-planet">Planet:</label>
+      <input type="text" id="input-planet" name="planet" required><br><br>
+
+      <label for="input-affiliation">Affiliation:</label>
+      <input type="text" id="input-affiliation" name="affiliation"><br><br>
+
+      <button type="submit">Add Customer</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Update Customer Info</h2>
+    <p>Select a customer from the dropdown and update their details.</p>
+    <form id="update-customer-form-ajax">
+
+        <label for="input-name">Select Customer: </label>
+        <select name="input-name" id="mySelect">
+            <option value="">Select a Customer</option>
+            {{#each data}}
+            <option value="{{this.customer_id}}">{{this.name}}</option>
+            {{/each}}
+        </select>
+
+        <label for="input-planet">Planet: </label>
+        <input type="text" id="input-planet-update" name="input-planet" placeholder="Enter planet name">
+
+        <label for="input-affiliation">Affiliation: </label>
+        <input type="text" id="input-affiliation-update" name="input-affiliation" placeholder="Enter affiliation">
+        
+        <button type="submit">Update Customer</button>
+
+    </form>
+  </section>
+
+  <script src="./js/add_customer.js"></script>
+  <script src="./js/update_customer.js"></script>
+  <script src="./js/delete_customer.js"></script>
+</body>
+</html>

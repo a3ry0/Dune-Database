@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Browse and Manage Harvesters</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="header-link">
+      <h1>Browse and Manage Harvesters</h1>
+    </a>
+  </header>
+  <nav class="nav-links">
+    <a href="/orders" class="nav-button">Orders</a>
+    <a href="/customers" class="nav-button">Customers</a>
+    <a href="/shipments" class="nav-button">Shipments</a>
+    <a href="/spice_silos" class="nav-button">Spice Silos</a>
+    <a href="/harvesters" class="nav-button">Harvesters</a>
+  </nav>
+  <section>
+    <h2>Existing Harvesters</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Harvester ID</th>
+          <th>Base City</th>
+          <th>Model</th>
+          <th>Team Captain</th>
+          <th>Last Maintenance Date</th>
+          <th>Total Harvested</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Carthag</td>
+          <td>HV-9236</td>
+          <td>Glossu Rabban</td>
+          <td>0189-01-03</td>
+          <td>2267</td>
+          <td>
+            <button onclick="editRecord('harvester', 1)">Edit</button>
+            <button onclick="deleteRecord('harvester', 1)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Carthag</td>
+          <td>HV-5780</td>
+          <td>Sarnak Varkon</td>
+          <td>0189-01-07</td>
+          <td>6789</td>
+          <td>
+            <button onclick="editRecord('harvester', 2)">Edit</button>
+            <button onclick="deleteRecord('harvester', 2)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Arrakeen</td>
+          <td>HV-1647</td>
+          <td>Tyra Vrax</td>
+          <td>0189-04-07</td>
+          <td>2346</td>
+          <td>
+            <button onclick="editRecord('harvester', 3)">Edit</button>
+            <button onclick="deleteRecord('harvester', 3)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Arrakeen</td>
+          <td>HV-4956</td>
+          <td>Rixan Hord</td>
+          <td>0189-04-09</td>
+          <td>743</td>
+          <td>
+            <button onclick="editRecord('harvester', 4)">Edit</button>
+            <button onclick="deleteRecord('harvester', 4)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Carthag</td>
+          <td>HV-7428</td>
+          <td>Darnak Gress</td>
+          <td>0189-01-07</td>
+          <td>15678</td>
+          <td>
+            <button onclick="editRecord('harvester', 5)">Edit</button>
+            <button onclick="deleteRecord('harvester', 5)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Add New Harvester</h2>
+    <form id="harvesterForm">
+      <label for="base_city">Base City:</label>
+      <input type="text" id="base_city" name="base_city" required><br><br>
+      
+      <label for="model">Model:</label>
+      <input type="text" id="model" name="model" required><br><br>
+      
+      <label for="team_captain">Team Captain:</label>
+      <input type="text" id="team_captain" name="team_captain" required><br><br>
+      
+      <label for="last_maintenance_date">Last Maintenance Date:</label>
+      <input type="date" id="last_maintenance_date" name="last_maintenance_date" required><br><br>
+      
+      <label for="total_harvested">Total Harvested:</label>
+      <input type="number" id="total_harvested" name="total_harvested" step="any" required><br><br>
+      
+      <button type="submit">Add Harvester</button>
+    </form>
+  </section>
+  <section>
+    <h2>Manage Harvester-Silo Associations</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Association ID</th>
+          <th>Harvester ID</th>
+          <th>Silo ID</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>2</td>
+          <td>
+            <button onclick="editRecord('harvester_silo', 1)">Edit</button>
+            <button onclick="deleteRecord('harvester_silo', 1)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>1</td>
+          <td>5</td>
+          <td>
+            <button onclick="editRecord('harvester_silo', 2)">Edit</button>
+            <button onclick="deleteRecord('harvester_silo', 2)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>5</td>
+          <td>2</td>
+          <td>
+            <button onclick="editRecord('harvester_silo', 3)">Edit</button>
+            <button onclick="deleteRecord('harvester_silo', 3)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>3</td>
+          <td>4</td>
+          <td>
+            <button onclick="editRecord('harvester_silo', 4)">Edit</button>
+            <button onclick="deleteRecord('harvester_silo', 4)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>4</td>
+          <td>4</td>
+          <td>
+            <button onclick="editRecord('harvester_silo', 5)">Edit</button>
+            <button onclick="deleteRecord('harvester_silo', 5)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Add Harvester-Silo Association</h3>
+    <form id="harvesterSiloForm">
+      <label for="assoc_harvester_id">Select Harvester:</label>
+      <select id="assoc_harvester_id" name="assoc_harvester_id" required>
+        <option value="1">Harvester 1 (HV-9236 - Carthag)</option>
+        <option value="2">Harvester 2 (HV-5780 - Carthag)</option>
+        <option value="3">Harvester 3 (HV-1647 - Arrakeen)</option>
+      </select><br><br>
+
+      <label for="assoc_silo_id">Select Silo:</label>
+      <select id="assoc_silo_id" name="assoc_silo_id" required>
+        <option value="1">Silo 1 (Arrakeen)</option>
+        <option value="2">Silo 2 (Carthag)</option>
+        <option value="3">Silo 3 (Arrakeen)</option>
+      </select><br><br>
+
+      <button type="submit">Add Association</button>
+    </form>
+  </section>
+  <script>
+    document.getElementById('harvesterForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('New harvester submitted (static demo).');
+    });
+    document.getElementById('harvesterSiloForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('New harvester-silo association submitted (static demo).');
+    });
+    
+    function editRecord(recordType, id) {
+      alert("Edit " + recordType + " record with id " + id + " (static demo).");
+    }
+    
+    function deleteRecord(recordType, id) {
+      alert("Delete " + recordType + " record with id " + id + " (static demo).");
+    }
+  </script>
+</body>
+</html>

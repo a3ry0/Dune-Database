@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Browse and Manage Shipments</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="header-link"></a>
+      <h1>Browse and Manage Orders</h1>
+    </a>
+  </header>
+  <nav class="nav-links">
+    <a href="/orders" class="nav-button">Orders</a>
+    <a href="/customers" class="nav-button">Customers</a>
+    <a href="/shipments" class="nav-button">Shipments</a>
+    <a href="/spice_silos" class="nav-button">Spice Silos</a>
+    <a href="/harvesters" class="nav-button">Harvesters</a>
+  </nav>
+  <section>
+    <h2>Existing Shipments</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Shipment ID</th>
+          <th>Order ID</th>
+          <th>Shipment Date</th>
+          <th>Carrier</th>
+          <th>Tracking Number</th>
+          <th>Shipment Status</th>
+          <th>Quantity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>0189-11-03</td>
+          <td>HL-9001</td>
+          <td>RH548322428CN</td>
+          <td>Delivered</td>
+          <td>200</td>
+          <td>
+            <button onclick="editRecord('shipment', 1)">Edit</button>
+            <button onclick="deleteRecord('shipment', 1)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>1</td>
+          <td>0189-11-03</td>
+          <td>HL-0211</td>
+          <td>RH843108899CN</td>
+          <td>Delivered</td>
+          <td>150</td>
+          <td>
+            <button onclick="editRecord('shipment', 2)">Edit</button>
+            <button onclick="deleteRecord('shipment', 2)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>1</td>
+          <td>0189-11-03</td>
+          <td>HL-9001</td>
+          <td>RH259105103CN</td>
+          <td>Delivered</td>
+          <td>126</td>
+          <td>
+            <button onclick="editRecord('shipment', 3)">Edit</button>
+            <button onclick="deleteRecord('shipment', 3)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>2</td>
+          <td>0189-11-04</td>
+          <td>HL-5140</td>
+          <td>RH229166660CN</td>
+          <td>In Transit</td>
+          <td>150</td>
+          <td>
+            <button onclick="editRecord('shipment', 4)">Edit</button>
+            <button onclick="deleteRecord('shipment', 4)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>2</td>
+          <td>0189-11-05</td>
+          <td>HL-4523</td>
+          <td>RH542160656CN</td>
+          <td>In Transit</td>
+          <td>140</td>
+          <td>
+            <button onclick="editRecord('shipment', 5)">Edit</button>
+            <button onclick="deleteRecord('shipment', 5)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Add New Shipment</h2>
+    <form id="shipmentForm">
+      <label for="order_id">Order:</label>
+      <select id="order_id" name="order_id" required>
+        <option value="">--Select Order--</option>
+        <option value="1">Order 1</option>
+        <option value="2">Order 2</option>
+        <option value="3">Order 3</option>
+      </select><br><br>
+      
+      <label for="shipment_date">Shipment Date:</label>
+      <input type="date" id="shipment_date" name="shipment_date" required><br><br>
+      
+      <label for="carrier">Carrier:</label>
+      <input type="text" id="carrier" name="carrier" required><br><br>
+      
+      <label for="tracking_number">Tracking Number:</label>
+      <input type="text" id="tracking_number" name="tracking_number" required><br><br>
+      
+      <label for="shipment_status">Shipment Status:</label>
+      <select id="shipment_status" name="shipment_status" required>
+        <option value="In Transit">In Transit</option>
+        <option value="Delivered">Delivered</option>
+      </select><br><br>
+      
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" step="any" required><br><br>
+      
+      <button type="submit">Add Shipment</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Manage Shipment-Silo Associations</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Association ID</th>
+          <th>Shipment ID</th>
+          <th>Silo ID</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>
+            <button onclick="editRecord('shipment_silo', 1)">Edit</button>
+            <button onclick="deleteRecord('shipment_silo', 1)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>1</td>
+          <td>3</td>
+          <td>
+            <button onclick="editRecord('shipment_silo', 2)">Edit</button>
+            <button onclick="deleteRecord('shipment_silo', 2)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>3</td>
+          <td>2</td>
+          <td>
+            <button onclick="editRecord('shipment_silo', 3)">Edit</button>
+            <button onclick="deleteRecord('shipment_silo', 3)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>4</td>
+          <td>3</td>
+          <td>
+            <button onclick="editRecord('shipment_silo', 4)">Edit</button>
+            <button onclick="deleteRecord('shipment_silo', 4)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>5</td>
+          <td>4</td>
+          <td>
+            <button onclick="editRecord('shipment_silo', 5)">Edit</button>
+            <button onclick="deleteRecord('shipment_silo', 5)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Add Shipment-Silo Association</h3>
+    <form id="shipmentSiloForm">
+      <label for="assoc_shipment_id">Select Shipment:</label>
+      <select id="assoc_shipment_id" name="assoc_shipment_id" required>
+        <option value="1">Shipment 1 (HL-9001)</option>
+        <option value="2">Shipment 2 (HL-0211)</option>
+        <option value="3">Shipment 3 (HL-9001)</option>
+      </select><br><br>
+  
+      <label for="assoc_silo_id">Select Silo:</label>
+      <select id="assoc_silo_id" name="assoc_silo_id" required>
+        <option value="1">Silo 1 (Arrakeen)</option>
+        <option value="2">Silo 2 (Carthag)</option>
+        <option value="3">Silo 3 (Arrakeen)</option>
+      </select><br><br>
+  
+      <button type="submit">Add Association</button>
+    </form>
+  </section>
+  <script>
+    document.getElementById('shipmentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('New shipment submitted (static demo).');
+    });
+    document.getElementById('shipmentSiloForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('New shipment-silo association submitted (static demo).');
+    });
+    
+    function editRecord(recordType, id) {
+      alert("Edit " + recordType + " record with id " + id + " (static demo).");
+    }
+    
+    function deleteRecord(recordType, id) {
+      alert("Delete " + recordType + " record with id " + id + " (static demo).");
+    }
+  </script>
+</body>
+</html>

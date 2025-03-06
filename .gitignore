@@ -1,0 +1,17 @@
+node_modules/
+
+db-connector.js
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# OS-specific & editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
