@@ -17,7 +17,13 @@ addCustomerForm.addEventListener("submit", function (e) {
     let planetValue = inputPlanet.value;
     let affiliationValue = inputAffiliation.value;
 
-    // Put our data we want to send in a javascript object
+    // Validate required fields
+    if (!nameValue || !planetValue) {
+        alert("Please fill out all required fields");
+        return;
+    }
+
+    // Put data in a javascript object
     let data = {
         name: nameValue,
         planet: planetValue,
@@ -26,53 +32,67 @@ addCustomerForm.addEventListener("submit", function (e) {
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-customer-ajax", true);
+    xhttp.open("POST", "/customers/add-customer-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
-        console.log("ReadyState: ", xhttp.readyState);
-        console.log("Status: ", xhttp.status);
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
+        if (xhttp.readyState == 4) {
+            console.log("Status:", xhttp.status);
+            console.log("Response:", xhttp.response);
+            console.log("Response length:", xhttp.response.length);
+            
+            if (xhttp.status == 200) {
+                try {
+                    // Only try to parse if there is a response
+                    if (xhttp.response && xhttp.response.trim().length > 0) {
+                        let newCustomer = JSON.parse(xhttp.response);
+                        console.log("Parsed Customer:", newCustomer);
+                        
+                        // Add the new data to the table
+                        addRowToTable(newCustomer);
+                    } else {
+                        console.error("Empty response received from server");
+                    }
+                } catch (e) {
+                    console.error("JSON Parse Error:", e);
+                    console.error("Raw response:", xhttp.response);
+                }
 
-            // Add the new data to the table
-            let newCustomer = JSON.parse(xhttp.response);
-            addRowToTable(newCustomer);
-
-            // Clear the input fields for another transaction
-            inputName.value = '';
-            inputPlanet.value = '';
-            inputAffiliation.value = '';
-        }
-        else if (xhttp.readyState == 4 && xhttp.status != 200) {
-            console.log("There was an error with the input.");
+                // Clear the input fields for another transaction
+                inputName.value = '';
+                inputPlanet.value = '';
+                inputAffiliation.value = '';
+            } else {
+                console.log("There was an error with the input. Status code:", xhttp.status);
+            }
         }
     }
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
+});
 
-})
-
-// Creates a single row from an Object representing a single record from 
-// Customers
+// Creates a single row from an Object representing a single record from Customers
 function addRowToTable(newCustomer) {
-    let table = document.getElementById("Customers-table").getElementsByTagName("tbody")[0];
+    // Get the table body
+    let tableBody = document.getElementById("Customers-table").getElementsByTagName("tbody")[0];
 
-    let row = document.createElement("TR");
+    // Create a new row
+    let row = document.createElement("tr");
     row.setAttribute('data-value', newCustomer.customer_id);
 
     // Create table cells
-    let idCell = document.createElement("TD");
-    let nameCell = document.createElement("TD");
-    let planetCell = document.createElement("TD");
-    let affiliationCell = document.createElement("TD");
-    let actionCell = document.createElement("TD");
+    let idCell = document.createElement("td");
+    let nameCell = document.createElement("td");
+    let planetCell = document.createElement("td");
+    let affiliationCell = document.createElement("td");
+    let actionCell = document.createElement("td");
 
     // Fill cells with correct data
-    idCell.innerText = newCustomer.customer_id || 'Error';
-    nameCell.innerText = newCustomer.name || 'Error';
-    planetCell.innerText = newCustomer.planet || 'Error';
+    idCell.innerText = newCustomer.customer_id;
+    nameCell.innerText = newCustomer.name;
+    planetCell.innerText = newCustomer.planet;
     affiliationCell.innerText = newCustomer.affiliation ? newCustomer.affiliation : 'N/A';
 
     // Create Edit button
@@ -101,5 +121,5 @@ function addRowToTable(newCustomer) {
     row.appendChild(actionCell);
 
     // Append row to table
-    table.appendChild(row);
+    tableBody.appendChild(row);
 }

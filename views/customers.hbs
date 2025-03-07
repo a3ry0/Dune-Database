@@ -52,13 +52,13 @@
     <h2>Add New Customer</h2>
     <form id="add-customer-form-ajax">
       <label for="input-name">Name:</label>
-      <input type="text" id="input-name" name="name" required><br><br>
+      <input type="text" id="input-name" name="name" required autocomplete="name"><br><br>
 
       <label for="input-planet">Planet:</label>
-      <input type="text" id="input-planet" name="planet" required><br><br>
+      <input type="text" id="input-planet" name="planet" required required autocomplete="planet"><br><br>
 
       <label for="input-affiliation">Affiliation:</label>
-      <input type="text" id="input-affiliation" name="affiliation"><br><br>
+      <input type="text" id="input-affiliation" name="affiliation" autocomplete="organization"><br><br>
 
       <button type="submit">Add Customer</button>
     </form>
@@ -66,24 +66,21 @@
 
   <section>
     <h2>Update Customer Info</h2>
-    <p>Select a customer from the dropdown and update their details.</p>
+    <p>Select a customer to edit and update their details.</p>
     <form id="update-customer-form-ajax">
 
-        <label for="input-name">Select Customer: </label>
-        <select name="input-name" id="mySelect">
-            <option value="">Select a Customer</option>
-            {{#each data}}
-            <option value="{{this.customer_id}}">{{this.name}}</option>
-            {{/each}}
-        </select>
+      <input type="hidden" id="customer-id-update" name="customer_id">
 
-        <label for="input-planet">Planet: </label>
-        <input type="text" id="input-planet-update" name="input-planet" placeholder="Enter planet name">
+      <label for="input-name-update">Name: </label>
+      <input type="text" id="input-name-update" name="input-name" placeholder="Enter customer name" required>
 
-        <label for="input-affiliation">Affiliation: </label>
-        <input type="text" id="input-affiliation-update" name="input-affiliation" placeholder="Enter affiliation">
-        
-        <button type="submit">Update Customer</button>
+      <label for="input-planet-update">Planet: </label>
+      <input type="text" id="input-planet-update" name="input-planet" placeholder="Enter planet name" required>
+
+      <label for="input-affiliation-update">Affiliation: </label>
+      <input type="text" id="input-affiliation-update" name="input-affiliation" placeholder="Enter affiliation">
+      
+      <button type="submit">Update Customer</button>
 
     </form>
   </section>
