@@ -1,5 +1,5 @@
 function deleteCustomer(customer_id) {
-  if (!confirm("Are you sure you want to delete this harvester?")) {
+  if (!confirm("Are you sure you want to delete this customer?")) {
     return;
   }
   // Put our data we want to send in a javascript object
