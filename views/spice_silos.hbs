@@ -18,9 +18,10 @@
     <a href="/spice_silos" class="nav-button">Spice Silos</a>
     <a href="/harvesters" class="nav-button">Harvesters</a>
   </nav>
+
   <section>
     <h2>Existing Spice Silos</h2>
-    <table border="1">
+    <table border="1" id="Spice-silos-table">
       <thead>
         <tr>
           <th>Silo ID</th>
@@ -32,95 +33,70 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Arrakeen</td>
-          <td>150</td>
-          <td>150</td>
-          <td>0189-04-01</td>
+        {{#each data}}
+        <tr data-value="{{this.silo_id}}">
+          <td>{{this.silo_id}}</td>
+          <td>{{this.city}}</td>
+          <td>{{this.spice_capacity}}</td>
+          <td>{{this.spice_quantity}}</td>
+          <td>{{this.last_inspection_date}}</td>
           <td>
-            <button onclick="editRecord('silo', 1)">Edit</button>
-            <button onclick="deleteRecord('silo', 1)">Delete</button>
+            <button onclick="editSpiceSilo({{this.silo_id}})">Edit</button>
+            <button onclick="deleteSpiceSilo({{this.silo_id}})">Delete</button>
           </td>
         </tr>
-        <tr>
-          <td>2</td>
-          <td>Carthag</td>
-          <td>200</td>
-          <td>200</td>
-          <td>0189-01-02</td>
-          <td>
-            <button onclick="editRecord('silo', 2)">Edit</button>
-            <button onclick="deleteRecord('silo', 2)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Arrakeen</td>
-          <td>150</td>
-          <td>150</td>
-          <td>0189-04-03</td>
-          <td>
-            <button onclick="editRecord('silo', 3)">Edit</button>
-            <button onclick="deleteRecord('silo', 3)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Arrakeen</td>
-          <td>150</td>
-          <td>120</td>
-          <td>0189-04-04</td>
-          <td>
-            <button onclick="editRecord('silo', 4)">Edit</button>
-            <button onclick="deleteRecord('silo', 4)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Carthag</td>
-          <td>200</td>
-          <td>185</td>
-          <td>0189-07-01</td>
-          <td>
-            <button onclick="editRecord('silo', 5)">Edit</button>
-            <button onclick="deleteRecord('silo', 5)">Delete</button>
-          </td>
-        </tr>
+        {{/each}}
       </tbody>
     </table>
   </section>
+
   <section>
     <h2>Add New Spice Silo</h2>
-    <form id="siloForm">
-      <label for="city">City:</label>
-      <input type="text" id="city" name="city" required><br><br>
+    <form id="add-spice-silo-form-ajax">
+      <label for="input-city">City:</label>
+      <input type="text" id="input-city" name="city" required><br><br>
       
-      <label for="spice_capacity">Spice Capacity:</label>
-      <input type="number" id="spice_capacity" name="spice_capacity" step="any" required><br><br>
+      <label for="input-spice-capacity">Spice Capacity:</label>
+      <input type="number" id="input-spice-capacity" name="spice_capacity" step="any" required><br><br>
       
-      <label for="spice_quantity">Spice Quantity:</label>
-      <input type="number" id="spice_quantity" name="spice_quantity" step="any" required><br><br>
+      <label for="input-spice-quantity">Spice Quantity:</label>
+      <input type="number" id="input-spice-quantity" name="spice_quantity" step="any" required><br><br>
       
-      <label for="last_inspection_date">Last Inspection Date:</label>
-      <input type="date" id="last_inspection_date" name="last_inspection_date"><br><br>
+      <label for="input-last-inspection-date">Last Inspection Date:</label>
+      <input type="date" id="input-last-inspection-date" name="last_inspection_date"><br><br>
       
       <button type="submit">Add Silo</button>
     </form>
   </section>
-  <script>
-    document.getElementById('siloForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('New spice silo submitted (static demo).');
-    });
-    
-    function editRecord(recordType, id) {
-      alert("Edit " + recordType + " record with id " + id + " (static demo).");
-    }
-    
-    function deleteRecord(recordType, id) {
-      alert("Delete " + recordType + " record with id " + id + " (static demo).");
-    }
-  </script>
+
+  <section>
+    <h2>Update Spice Silo Information</h2>
+    <p>Select a spice silo to edit and update its details.</p>
+    <form id="update-spice-silo-form-ajax">
+
+      <input type="hidden" id="silo-id-update" name="silo-id">
+
+      <label for="input-city-update">City:</label>
+      <input type="text" id="input-city-update" name="city" required><br><br>
+      
+      <label for="input-spice-capacity-update">Spice Capacity:</label>
+      <input type="number" id="input-spice-capacity-update" name="spice_capacity" step="any" required><br><br>
+      
+      <label for="input-spice-quantity-update">Spice Quantity:</label>
+      <input type="number" id="input-spice-quantity-update" name="spice_quantity" step="any" required><br><br>
+      
+      <label for="input-last-inspection-date-update">Last Inspection Date:</label>
+      <input type="date" id="input-last-inspection-date-update" name="last_inspection_date"><br><br>
+      
+      
+      <button type="submit">Update Spice Silo</button>
+
+    </form>
+  </section>
+
+  <script src="./js/spice_silos/add_spice_silo.js"></script>
+  <script src="./js/spice_silos/update_spice_silo.js"></script>
+  <script src="./js/spice_silos/delete_spice_silo.js"></script>
+  
 </body>
 </html>

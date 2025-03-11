@@ -1,8 +1,8 @@
 // Get the update harvester form element
-let updateHarvesterForm = document.getElementById('update-harvester-form-ajax');
+let updateShipmentForm = document.getElementById('update-harvester-form-ajax');
 
 // Modify the objects we need
-updateHarvesterForm.addEventListener("submit", function (e) {
+updateShipmentForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault();
 

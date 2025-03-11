@@ -3,7 +3,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 8877;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 8878;                 // Set a port number at the top so it's easy to change in the future
 // Database
 var db = require('./database/db-connector')
 
@@ -20,12 +20,16 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 
 // Import customer routes
 const customerRoutes = require('./routes/customers');
-const harvesterRoutes = require('./routes/harvesters')
+const harvesterRoutes = require('./routes/harvesters');
+const shipmentRoutes = require('./routes/shipments');
+const siloRoutes = require('./routes/spice_silos');
 
 
 // Mount customer routes at '/customers'
 app.use('/customers', customerRoutes);
 app.use('/harvesters', harvesterRoutes)
+app.use('/shipments', shipmentRoutes)
+app.use('/spice_silos', siloRoutes)
 
 
 /*

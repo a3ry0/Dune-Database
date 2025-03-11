@@ -18,9 +18,10 @@
     <a href="/spice_silos" class="nav-button">Spice Silos</a>
     <a href="/harvesters" class="nav-button">Harvesters</a>
   </nav>
+  
   <section>
     <h2>Existing Shipments</h2>
-    <table border="1">
+    <table border="1" id="Shipments-table">
       <thead>
         <tr>
           <th>Shipment ID</th>
@@ -34,106 +35,89 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>2</td>
-          <td>0189-11-03</td>
-          <td>HL-9001</td>
-          <td>RH548322428CN</td>
-          <td>Delivered</td>
-          <td>200</td>
+        {{#each data}}
+        <tr data-value="{{this.shipment_id}}">
+          <td>{{this.shipment_id}}</td>
+          <td>{{this.order_id}}</td>
+          <td>{{this.shipment_date}}</td>
+          <td>{{this.carrier}}</td>
+          <td>{{this.tracking_number}}</td>
+          <td>{{this.shipment_status}}</td>
+          <td>{{this.quantity}}</td>
           <td>
-            <button onclick="editRecord('shipment', 1)">Edit</button>
-            <button onclick="deleteRecord('shipment', 1)">Delete</button>
+            <button onclick="editShipment({{this.shipment_id}})">Edit</button>
+            <button onclick="deleteShipment({{this.shipment_id}})">Delete</button>
           </td>
         </tr>
-        <tr>
-          <td>2</td>
-          <td>1</td>
-          <td>0189-11-03</td>
-          <td>HL-0211</td>
-          <td>RH843108899CN</td>
-          <td>Delivered</td>
-          <td>150</td>
-          <td>
-            <button onclick="editRecord('shipment', 2)">Edit</button>
-            <button onclick="deleteRecord('shipment', 2)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>1</td>
-          <td>0189-11-03</td>
-          <td>HL-9001</td>
-          <td>RH259105103CN</td>
-          <td>Delivered</td>
-          <td>126</td>
-          <td>
-            <button onclick="editRecord('shipment', 3)">Edit</button>
-            <button onclick="deleteRecord('shipment', 3)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>2</td>
-          <td>0189-11-04</td>
-          <td>HL-5140</td>
-          <td>RH229166660CN</td>
-          <td>In Transit</td>
-          <td>150</td>
-          <td>
-            <button onclick="editRecord('shipment', 4)">Edit</button>
-            <button onclick="deleteRecord('shipment', 4)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>2</td>
-          <td>0189-11-05</td>
-          <td>HL-4523</td>
-          <td>RH542160656CN</td>
-          <td>In Transit</td>
-          <td>140</td>
-          <td>
-            <button onclick="editRecord('shipment', 5)">Edit</button>
-            <button onclick="deleteRecord('shipment', 5)">Delete</button>
-          </td>
-        </tr>
+        {{/each}}
       </tbody>
     </table>
   </section>
+
   <section>
     <h2>Add New Shipment</h2>
-    <form id="shipmentForm">
-      <label for="order_id">Order:</label>
-      <select id="order_id" name="order_id" required>
-        <option value="">--Select Order--</option>
-        <option value="1">Order 1</option>
-        <option value="2">Order 2</option>
-        <option value="3">Order 3</option>
-      </select><br><br>
+    <form id="add-shipment-form-ajax">
+
+      <label for="input-order-id">Order:</label>
+      <input type="number" id="input-order-id" name="order-id" required><br><br>
       
-      <label for="shipment_date">Shipment Date:</label>
-      <input type="date" id="shipment_date" name="shipment_date" required><br><br>
+      <label for="input-shipment-date">Shipment Date:</label>
+      <input type="date" id="input-shipment-date" name="shipment_date" required><br><br>
       
-      <label for="carrier">Carrier:</label>
-      <input type="text" id="carrier" name="carrier" required><br><br>
+      <label for="input-carrier">Carrier:</label>
+      <input type="text" id="input-carrier" name="carrier" required><br><br>
       
-      <label for="tracking_number">Tracking Number:</label>
-      <input type="text" id="tracking_number" name="tracking_number" required><br><br>
+      <label for="input-tracking-number">Tracking Number:</label>
+      <input type="text" id="input-tracking-number" name="tracking_number" required><br><br>
       
-      <label for="shipment_status">Shipment Status:</label>
-      <select id="shipment_status" name="shipment_status" required>
+      <label for="input-shipment-status">Shipment Status:</label>
+      <select id="input-shipment-status" name="shipment_status" required>
         <option value="In Transit">In Transit</option>
         <option value="Delivered">Delivered</option>
       </select><br><br>
       
-      <label for="quantity">Quantity:</label>
-      <input type="number" id="quantity" name="quantity" step="any" required><br><br>
+      <label for="input-quantity">Quantity:</label>
+      <input type="number" id="input-quantity" name="quantity" step="any" required><br><br>
       
       <button type="submit">Add Shipment</button>
     </form>
   </section>
+
+  <section>
+    <h2>Update Shipment Information</h2>
+    <p>Select a shipment to edit and update their details.</p>
+    <form id="update-shipment-form-ajax">
+      <input type="hidden" id="shipment-id-update" name="shipment-id">
+
+      <label for="input-order-id-update">Order:</label>
+      <input type="number" id="input-order-id-update" name="order-id" required><br><br>
+
+      <label for="input-shipment-date-update">Shipment Date:</label>
+      <input type="date" id="input-shipment-date-update" name="shipment_date" required><br><br>
+      
+      <label for="input-carrier-update">Carrier:</label>
+      <input type="text" id="input-carrier-update" name="carrier" required><br><br>
+      
+      <label for="input-tracking-number-update">Tracking Number:</label>
+      <input type="text" id="input-tracking-number-update" name="tracking_number" required><br><br>
+      
+      <label for="input-shipment-status-update">Shipment Status:</label>
+      <select id="input-shipment-status-update" name="shipment_status" required>
+        <option value="In Transit">In Transit</option>
+        <option value="Delivered">Delivered</option>
+      </select><br><br>
+      
+      <label for="input-quantity-update">Quantity:</label>
+      <input type="number" id="input-quantity-update" name="quantity" step="any" required><br><br>
+      
+      <button type="submit">Update Shipment</button>
+
+    </form>
+  </section>
+
+  <script src="./js/shipments/add_shipment.js"></script>
+  <script src="./js/shipments/update_shipment.js"></script>
+  <script src="./js/shipments/delete_shipment.js"></script>
 
   <section>
     <h2>Manage Shipment-Silo Associations</h2>
