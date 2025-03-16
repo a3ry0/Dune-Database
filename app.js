@@ -23,13 +23,15 @@ const customerRoutes = require('./routes/customers');
 const harvesterRoutes = require('./routes/harvesters');
 const shipmentRoutes = require('./routes/shipments');
 const siloRoutes = require('./routes/spice_silos');
+const orderRoutes = require('./routes/orders');
 
 
 // Mount customer routes at '/customers'
 app.use('/customers', customerRoutes);
-app.use('/harvesters', harvesterRoutes)
-app.use('/shipments', shipmentRoutes)
-app.use('/spice_silos', siloRoutes)
+app.use('/harvesters', harvesterRoutes);
+app.use('/shipments', shipmentRoutes);
+app.use('/spice_silos', siloRoutes);
+app.use('/orders', orderRoutes);
 
 
 /*
@@ -46,16 +48,4 @@ app.listen(PORT, function(){            // This is the basic syntax for what is 
 */
 app.get('/', function(req, res) {
     res.render('index');
-});
-
-  app.get('/orders', function(req, res) {
-    res.render('orders');
-});
-
-app.get('/shipments', function(req, res) {
-    res.render('shipments');
-});
-
-app.get('/spice_silos', function(req, res) {
-    res.render('spice_silos');
 });

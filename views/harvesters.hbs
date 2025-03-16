@@ -64,10 +64,10 @@
       <input type="text" id="input-team-captain" name="team_captain" required autocomplete="captain"><br><br>
       
       <label for="input-last-maintenance-date">Last Maintenance Date:</label>
-      <input type="date" id="input-last-maintenance-date" name="last_maintenance_date"autocomplete="date"><br><br>
+      <input type="date" id="input-last-maintenance-date" name="last_maintenance_date" autocomplete="date"><br><br>
       
       <label for="input-total-harvested">Total Harvested:</label>
-      <input type="number" id="input-total-harvested" name="total_harvested" step="any" required autocomplete="harvest"><br><br>
+      <input type="number" id="input-total-harvested" name="total_harvested" step="0.01" required autocomplete="harvest"><br><br>
       
       <button type="submit">Add Harvester</button>
     </form>
@@ -77,128 +77,81 @@
     <h2>Update Harvester Information</h2>
     <p>Select a harvester to edit and update their details.</p>
     <form id="update-harvester-form-ajax">
-
-      <input type="hidden" id="harvester-id-update" name="harvester-id">
+      <input type="hidden" id="harvester-id-update" name="harvester_id">
 
       <label for="input-base-city-update">Base City:</label>
-      <input type="text" id="input-base-city-update" name="input-base-city" placeholder="Enter harvester name" required>
+      <input type="text" id="input-base-city-update" name="base_city" required><br><br>
       
       <label for="input-model-update">Model:</label>
-      <input type="text" id="input-model-update" name="input-model" placeholder="Enter model name" required>
+      <input type="text" id="input-model-update" name="model" required><br><br>
       
       <label for="input-team-captain-update">Team Captain:</label>
-      <input type="text" id="input-team-captain-update" name="input-team-captain" placeholder="Enter team captain name" required>
+      <input type="text" id="input-team-captain-update" name="team_captain" required><br><br>
       
       <label for="input-last-maintenance-date-update">Last Maintenance Date:</label>
-      <input type="date" id="input-last-maintenance-date-update" name="last-maintenance-date-update" placeholder="Enter last maintenance date">
+      <input type="date" id="input-last-maintenance-date-update" name="last_maintenance_date"><br><br>
       
       <label for="input-total-harvested-update">Total Harvested:</label>
-      <input type="number" id="input-total-harvested-update" name="input-total-harvested" step="any" placeholder="Enter total harvested" required>
+      <input type="number" id="input-total-harvested-update" name="total_harvested" step="0.01" required><br><br>
       
       <button type="submit">Update Harvester</button>
-
     </form>
   </section>
 
-  <script src="./js/harvesters/add_harvester.js"></script>
-  <script src="./js/harvesters/update_harvester.js"></script>
-  <script src="./js/harvesters/delete_harvester.js"></script>
+  <script src="/js/harvesters/add_harvester.js"></script>
+  <script src="/js/harvesters/update_harvester.js"></script>
+  <script src="/js/harvesters/delete_harvester.js"></script>
   
+  <!-- HARVESTER-SILO ASSOCIATION SECTION -->
   <section>
     <h2>Manage Harvester-Silo Associations</h2>
-    <table border="1">
+    <table border="1" id="Harvesters-Silos-table">
       <thead>
         <tr>
           <th>Association ID</th>
-          <th>Harvester ID</th>
-          <th>Silo ID</th>
+          <th>Harvester</th>
+          <th>Silo</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>1</td>
-          <td>2</td>
+        {{#each associations}}
+        <tr data-value="{{this.harvester_silo_id}}">
+          <td>{{this.harvester_silo_id}}</td>
+          <td>{{this.harvester_info}}</td>
+          <td>{{this.silo_info}}</td>
           <td>
-            <button onclick="editRecord('harvester_silo', 1)">Edit</button>
-            <button onclick="deleteRecord('harvester_silo', 1)">Delete</button>
+            <button onclick="deleteHarvesterSilo({{this.harvester_silo_id}})">Delete</button>
           </td>
         </tr>
-        <tr>
-          <td>2</td>
-          <td>1</td>
-          <td>5</td>
-          <td>
-            <button onclick="editRecord('harvester_silo', 2)">Edit</button>
-            <button onclick="deleteRecord('harvester_silo', 2)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>5</td>
-          <td>2</td>
-          <td>
-            <button onclick="editRecord('harvester_silo', 3)">Edit</button>
-            <button onclick="deleteRecord('harvester_silo', 3)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>3</td>
-          <td>4</td>
-          <td>
-            <button onclick="editRecord('harvester_silo', 4)">Edit</button>
-            <button onclick="deleteRecord('harvester_silo', 4)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>4</td>
-          <td>4</td>
-          <td>
-            <button onclick="editRecord('harvester_silo', 5)">Edit</button>
-            <button onclick="deleteRecord('harvester_silo', 5)">Delete</button>
-          </td>
-        </tr>
+        {{/each}}
       </tbody>
     </table>
+    
     <h3>Add Harvester-Silo Association</h3>
-    <form id="harvesterSiloForm">
-      <label for="assoc_harvester_id">Select Harvester:</label>
-      <select id="assoc_harvester_id" name="assoc_harvester_id" required>
-        <option value="1">Harvester 1 (HV-9236 - Carthag)</option>
-        <option value="2">Harvester 2 (HV-5780 - Carthag)</option>
-        <option value="3">Harvester 3 (HV-1647 - Arrakeen)</option>
+    <form id="add-harvester-silo-form-ajax">
+      <label for="input-harvester-id">Select Harvester:</label>
+      <select id="input-harvester-id" name="harvester_id" required>
+        <option value="">--Select Harvester--</option>
+        {{#each data}}
+        <option value="{{this.harvester_id}}">{{this.model}} ({{this.base_city}}) - Captain: {{this.team_captain}}</option>
+        {{/each}}
       </select><br><br>
 
-      <label for="assoc_silo_id">Select Silo:</label>
-      <select id="assoc_silo_id" name="assoc_silo_id" required>
-        <option value="1">Silo 1 (Arrakeen)</option>
-        <option value="2">Silo 2 (Carthag)</option>
-        <option value="3">Silo 3 (Arrakeen)</option>
+      <label for="input-silo-id">Select Silo:</label>
+      <select id="input-silo-id" name="silo_id" required>
+        <option value="">--Select Silo--</option>
+        {{#each silos}}
+        <option value="{{this.silo_id}}">Silo {{this.silo_id}} ({{this.city}}, Capacity: {{this.spice_capacity}})</option>
+        {{/each}}
       </select><br><br>
 
       <button type="submit">Add Association</button>
     </form>
   </section>
-  <script>
-    document.getElementById('harvesterForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('New harvester submitted (static demo).');
-    });
-    document.getElementById('harvesterSiloForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('New harvester-silo association submitted (static demo).');
-    });
-    
-    function editRecord(recordType, id) {
-      alert("Edit " + recordType + " record with id " + id + " (static demo).");
-    }
-    
-    function deleteRecord(recordType, id) {
-      alert("Delete " + recordType + " record with id " + id + " (static demo).");
-    }
-    
+  
+  <!-- Load Harvester-Silo scripts -->
+  <script src="/js/harvesters/add_harvester_silo.js"></script>
+  <script src="/js/harvesters/delete_harvester_silo.js"></script>
 </body>
 </html>

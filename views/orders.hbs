@@ -20,7 +20,7 @@
   </nav>
   <section>
     <h2>Existing Orders</h2>
-    <table border="1">
+    <table border="1" id="Orders-table">
       <thead>
         <tr>
           <th>Order ID</th>
@@ -33,89 +33,90 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Edric</td>
-          <td>0189-11-02</td>
-          <td>276</td>
-          <td>Completed</td>
-          <td>1 Via Ludus, Wallach IX</td>
+        {{#each orders}}
+        <tr data-value="{{this.order_id}}" data-customer-id="{{this.customer_id}}">
+          <td>{{this.order_id}}</td>
+          <td>{{this.customer_name}}</td>
+          <td>{{this.order_date}}</td>
+          <td>{{this.total_quantity}}</td>
+          <td>{{this.order_status}}</td>
+          <td>{{this.destination}}</td>
           <td>
-            <button onclick="editRecord('order', 1)">Edit</button>
-            <button onclick="deleteRecord('order', 1)">Delete</button>
+            <button onclick="editOrder({{this.order_id}})">Edit</button>
+            <button onclick="deleteOrder({{this.order_id}})">Delete</button>
           </td>
         </tr>
-        <tr>
-          <td>2</td>
-          <td>Gaius Helen Mohiam</td>
-          <td>0189-11-03</td>
-          <td>490</td>
-          <td>Partially Fulfilled</td>
-          <td>782 Imperial Blvd, Corrinth City, Kaitain 90742</td>
-          <td>
-            <button onclick="editRecord('order', 1)">Edit</button>
-            <button onclick="deleteRecord('order', 1)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Edric</td>
-          <td>0189-11-05</td>
-          <td>394</td>
-          <td>Pending</td>
-          <td>2561 Guild Ln, Junction, Tupile 678911</td>
-          <td>
-            <button onclick="editRecord('order', 1)">Edit</button>
-            <button onclick="deleteRecord('order', 1)">Delete</button>
-          </td>
-        </tr>
+        {{/each}}
       </tbody>
     </table>
   </section>
   <section>
     <h2>Add New Order</h2>
-    <form id="orderForm">
-      <label for="customer_id">Customer (Optional):</label>
-      <select id="customer_id" name="customer_id">
+    <form id="add-order-form-ajax">
+      <label for="input-customer-id">Customer:</label>
+      <select id="input-customer-id" name="customer_id" required>
         <option value="">--Select Customer--</option>
-        <option value="1">Edric</option>
-        <option value="2">Gaius Helen Mohiam</option>
-        <option value="3">Count Fenring</option>
-        <option value="4">Thufir Hawat</option>
+        {{#each customers}}
+        <option value="{{this.customer_id}}">{{this.name}}</option>
+        {{/each}}
       </select><br><br>
       
-      <label for="order_date">Order Date:</label>
-      <input type="date" id="order_date" name="order_date" required><br><br>
+      <label for="input-order-date">Order Date:</label>
+      <input type="date" id="input-order-date" name="order_date" required><br><br>
       
-      <label for="total_quantity">Total Quantity:</label>
-      <input type="number" id="total_quantity" name="total_quantity" required><br><br>
+      <label for="input-total-quantity">Total Quantity:</label>
+      <input type="number" id="input-total-quantity" name="total_quantity" min="1" required><br><br>
       
-      <label for="order_status">Order Status:</label>
-      <select id="order_status" name="order_status" required>
+      <label for="input-order-status">Order Status:</label>
+      <select id="input-order-status" name="order_status" required>
         <option value="Pending">Pending</option>
         <option value="Partially Fulfilled">Partially Fulfilled</option>
         <option value="Completed">Completed</option>
       </select><br><br>
       
-      <label for="destination">Destination:</label>
-      <input type="text" id="destination" name="destination" required><br><br>
+      <label for="input-destination">Destination:</label>
+      <input type="text" id="input-destination" name="destination" required><br><br>
       
       <button type="submit">Add Order</button>
     </form>
   </section>
-  <script>
-    document.getElementById('orderForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('New order submitted (this is a static demo).');
-    });
 
-    function editRecord(recordType, id) {
-      alert("Edit " + recordType + " record with id " + id + " (static demo).");
-    }
-    
-    function deleteRecord(recordType, id) {
-      alert("Delete " + recordType + " record with id " + id + " (static demo).");
-    }
-  </script>
+  <section>
+    <h2>Update Order Information</h2>
+    <p>Select an order to edit and update its details.</p>
+    <form id="update-order-form-ajax">
+      <input type="hidden" id="order-id-update" name="order_id">
+
+      <label for="input-customer-id-update">Customer:</label>
+      <select id="input-customer-id-update" name="customer_id" required>
+        <option value="">--Select Customer--</option>
+        {{#each customers}}
+        <option value="{{this.customer_id}}">{{this.name}}</option>
+        {{/each}}
+      </select><br><br>
+      
+      <label for="input-order-date-update">Order Date:</label>
+      <input type="date" id="input-order-date-update" name="order_date" required><br><br>
+      
+      <label for="input-total-quantity-update">Total Quantity:</label>
+      <input type="number" id="input-total-quantity-update" name="total_quantity" min="1" required><br><br>
+      
+      <label for="input-order-status-update">Order Status:</label>
+      <select id="input-order-status-update" name="order_status" required>
+        <option value="Pending">Pending</option>
+        <option value="Partially Fulfilled">Partially Fulfilled</option>
+        <option value="Completed">Completed</option>
+      </select><br><br>
+      
+      <label for="input-destination-update">Destination:</label>
+      <input type="text" id="input-destination-update" name="destination" required><br><br>
+      
+      <button type="submit">Update Order</button>
+    </form>
+  </section>
+
+  <script src="/js/orders/add_order.js"></script>
+  <script src="/js/orders/update_order.js"></script>
+  <script src="/js/orders/delete_order.js"></script>
 </body>
 </html>

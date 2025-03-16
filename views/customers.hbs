@@ -37,7 +37,7 @@
           <td>{{this.customer_id}}</td>
           <td>{{this.name}}</td>
           <td>{{this.planet}}</td>
-          <td>{{this.affiliation}}</td>
+          <td>{{#if this.affiliation}}{{this.affiliation}}{{else}}N/A{{/if}}</td>
           <td>
             <button onclick="editCustomer({{this.customer_id}})">Edit</button>
             <button onclick="deleteCustomer({{this.customer_id}})">Delete</button>
@@ -55,7 +55,7 @@
       <input type="text" id="input-name" name="name" required autocomplete="name"><br><br>
 
       <label for="input-planet">Planet:</label>
-      <input type="text" id="input-planet" name="planet" required required autocomplete="planet"><br><br>
+      <input type="text" id="input-planet" name="planet" required autocomplete="off"><br><br>
 
       <label for="input-affiliation">Affiliation:</label>
       <input type="text" id="input-affiliation" name="affiliation" autocomplete="organization"><br><br>
@@ -68,25 +68,24 @@
     <h2>Update Customer Information</h2>
     <p>Select a customer to edit and update their details.</p>
     <form id="update-customer-form-ajax">
-
       <input type="hidden" id="customer-id-update" name="customer_id">
 
       <label for="input-name-update">Name: </label>
-      <input type="text" id="input-name-update" name="input-name" placeholder="Enter customer name" required>
+      <input type="text" id="input-name-update" name="name" required><br><br>
 
       <label for="input-planet-update">Planet: </label>
-      <input type="text" id="input-planet-update" name="input-planet" placeholder="Enter planet name" required>
+      <input type="text" id="input-planet-update" name="planet" required><br><br>
 
       <label for="input-affiliation-update">Affiliation: </label>
-      <input type="text" id="input-affiliation-update" name="input-affiliation" placeholder="Enter affiliation">
+      <input type="text" id="input-affiliation-update" name="affiliation"><br><br>
       
       <button type="submit">Update Customer</button>
-
     </form>
   </section>
 
-  <script src="./js/customers/add_customer.js"></script>
-  <script src="./js/customers/update_customer.js"></script>
-  <script src="./js/customers/delete_customer.js"></script>
+  <!-- Make sure these paths are correct for your project structure -->
+  <script src="/js/customers/add_customer.js"></script>
+  <script src="/js/customers/update_customer.js"></script>
+  <script src="/js/customers/delete_customer.js"></script>
 </body>
 </html>
