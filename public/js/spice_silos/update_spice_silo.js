@@ -7,7 +7,7 @@ updateSpiceSiloForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let siloId = document.getElementById("silo-id-update")
+    let siloId = document.getElementById("silo-id-update").value;
     let inputCity = document.getElementById("input-city-update");
     let inputSpiceCapacity = document.getElementById("input-spice-capacity-update");
     let inputSpiceQuantity = document.getElementById("input-spice-quantity-update");
@@ -37,16 +37,31 @@ updateSpiceSiloForm.addEventListener("submit", function (e) {
     
     // Setup AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "/spice_silos/put-silo-ajax", true);
+    xhttp.open("PUT", "/spice_silos/put-spice-silo-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
+
+  
 
     // Handle the AJAX response
     xhttp.onreadystatechange = () => {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-            // Update the row in the spice silos table with the new data
-            updateRow(xhttp.response, siloId);
-        } else if (xhttp.readyState === 4 && xhttp.status !== 200) {
-            console.log("There was an error with the input.");
+        if (xhttp.readyState === 4) {
+            if (xhttp.status === 200) {
+                try {
+                    // Parse the JSON response
+                    let updatedSilo = JSON.parse(xhttp.response);
+                    console.log("Updated silo:", updatedSilo);
+                    
+                    // Update the row in the shipments table with the new data
+                    updateRow(updatedSilo);
+                } catch (e) {
+                    console.error("JSON Parse Error:", e);
+                    console.error("Raw response:", xhttp.response);
+                }
+            } else {
+                console.log("There was an error with the input. Status:", xhttp.status);
+                console.log("Response:", xhttp.response);
+                alert("Error updating shipment");
+            }
         }
     };
 
@@ -54,7 +69,7 @@ updateSpiceSiloForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data));
 });
 
-// Function to update the row in the shipments table
+// Function to update the row in the silos table
 function updateRow(spiceSilo) {
     let table = document.getElementById("Spice-silos-table");
     for (let i = 0, row; row = table.rows[i]; i++) {
@@ -62,10 +77,13 @@ function updateRow(spiceSilo) {
             let updateRowIndex = table.getElementsByTagName("tr")[i];
             
             // Update the table cells
-            updateRowIndex.getElementsByTagName("td")[1].innerText = spiceSilo.city;
-            updateRowIndex.getElementsByTagName("td")[2].innerText = spiceSilo.spice_capacity;
-            updateRowIndex.getElementsByTagName("td")[3].innerText = spiceSilo.spice_quantity;
-            updateRowIndex.getElementsByTagName("td")[4].innerText = spiceSilo.last_inspection_date || null;
+            let cells = updateRowIndex.getElementsByTagName("td");
+            if (cells.length > 1) {
+                cells[1].innerText = spiceSilo.city;
+                cells[2].innerText = spiceSilo.spice_capacity;
+                cells[3].innerText = spiceSilo.spice_quantity;
+                cells[4].innerText = spiceSilo.last_inspection_date || "N/A";
+            }
             break;
         }
     }

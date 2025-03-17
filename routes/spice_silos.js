@@ -75,6 +75,8 @@ router.put('/put-spice-silo-ajax', function(req, res, next){
   let spice_quantity = parseInt(data.spice_quantity);
   let last_inspection_date = data.last_inspection_date ? data.last_inspection_date : null;
 
+  console.log(city, spice_capacity, spice_quantity, last_inspection_date, silo_id)
+
   let queryUpdateSilo = `UPDATE Spice_Silos SET city = ?, spice_capacity = ?, spice_quantity = ?, last_inspection_date = ? WHERE silo_id = ?`;
 
   // Validate input data

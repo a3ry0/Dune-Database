@@ -5,19 +5,36 @@ const db = require('../database/db-connector');
 // Route: GET /Shipments - List all shipments
 router.get('/', function(req, res) {
   let query = "SELECT * FROM Shipments;";
+
+  let ordersQuery = `SELECT order_id FROM Orders ORDER BY order_id ASC;`;
+
+  
+
   db.pool.query(query, function(error, rows, fields) {
     if (error) {
-      console.log(error);
+      console.log("Error fetching shipments:", error);
       return res.sendStatus(500);
-    } else {
+    }
+    
+    // Get orders for dropdown
+    db.pool.query(ordersQuery, function(error, ordersRows, fields) {
+      if (error) {
+        console.log("Error fetching orders:", error);
+        return res.sendStatus(500);
+      }
+      
+      // Format order dates
       rows.forEach(row => {
         if (row.shipment_date) {
-          // Convert to YYYY-MM-DD format
-          row.shipment_date = row.shipment_date.toISOString().split('T')[0];
+          row.shipment_date = new Date(row.shipment_date).toISOString().split('T')[0];
         }
       });
-      return res.render('shipments', { data: rows });
-    }
+      
+      res.render('shipments', { 
+        data: rows,
+        orders: ordersRows
+      });
+    });
   });
 });
 

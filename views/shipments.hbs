@@ -59,7 +59,12 @@
     <form id="add-shipment-form-ajax">
 
       <label for="input-order-id">Order:</label>
-      <input type="number" id="input-order-id" name="order-id" required><br><br>
+      <select id="input-order-id" name="order-id" required>
+        <option value="">--Select Order--</option>
+        {{#each orders}}
+        <option value="{{this.shipment_id}}">{{this.order_id}}</option>
+        {{/each}}
+      </select><br><br>
       
       <label for="input-shipment-date">Shipment Date:</label>
       <input type="date" id="input-shipment-date" name="shipment_date" required><br><br>
@@ -90,7 +95,12 @@
       <input type="hidden" id="shipment-id-update" name="shipment-id">
 
       <label for="input-order-id-update">Order:</label>
-      <input type="number" id="input-order-id-update" name="order-id" required><br><br>
+      <select id="input-order-id-update" name="order_id" required>
+        <option value="">--Select Order--</option>
+        {{#each orders}}
+        <option value="{{this.shipment_id}}">{{this.order_id}}</option>
+        {{/each}}
+      </select><br><br>
 
       <label for="input-shipment-date-update">Shipment Date:</label>
       <input type="date" id="input-shipment-date-update" name="shipment_date" required><br><br>
