@@ -16,7 +16,7 @@ router.get('/', function(req, res) {
     JOIN Spice_Silos s ON hs.silo_id = s.silo_id
     ORDER BY hs.harvester_silo_id ASC;
   `;
-  
+
   // Query for all spice silos (for dropdown)
   let silosQuery = "SELECT * FROM Spice_Silos ORDER BY silo_id ASC;";
   
@@ -183,7 +183,7 @@ router.delete('/delete-harvester-ajax', function(req,res, next){
   });
 });
 
-// ====== HARVESTER-SILO ASSOCIATION ROUTES ======
+// ====== harvester-silo association routes ======
 
 // Route: POST /harvesters/add-harvester-silo-ajax - Add a new harvester-silo association
 router.post('/add-harvester-silo-ajax', function(req, res) {
@@ -256,6 +256,85 @@ router.post('/add-harvester-silo-ajax', function(req, res) {
           return res.status(200).json(newAssociation);
         } else {
           return res.status(404).json({ error: "Association not found after insert" });
+        }
+      });
+    });
+  });
+});
+
+// Route: PUT /harvesters/put-harvester-silo-ajax - Update a harvester-silo association
+router.put('/put-harvester-silo-ajax', function(req, res) {
+  let data = req.body;
+  
+  // Debug logging
+  console.log("Received PUT request for harvester-silo with data:", data);
+  
+  // Validate input data
+  if (!data.harvester_silo_id || !data.harvester_id || !data.silo_id) {
+    console.log("Missing required fields");
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+  
+  let association_id = parseInt(data.harvester_silo_id);
+  let harvester_id = parseInt(data.harvester_id);
+  let silo_id = parseInt(data.silo_id);
+  
+  // First, check if the new association already exists (avoid duplicates)
+  let checkQuery = `
+    SELECT * FROM Harvesters_Spice_Silos 
+    WHERE harvester_id = ? AND silo_id = ? AND harvester_silo_id != ?
+  `;
+  
+  db.pool.query(checkQuery, [harvester_id, silo_id, association_id], function(error, checkResults) {
+    if (error) {
+      console.log("Database check error:", error);
+      return res.status(400).json({ error: "Database check error" });
+    }
+    
+    if (checkResults.length > 0) {
+      return res.status(400).json({ error: "This harvester-silo association already exists" });
+    }
+    
+    // Update the association
+    let updateQuery = `
+      UPDATE Harvesters_Spice_Silos 
+      SET harvester_id = ?, silo_id = ? 
+      WHERE harvester_silo_id = ?
+    `;
+    
+    db.pool.query(updateQuery, [harvester_id, silo_id, association_id], function(error, updateResult) {
+      if (error) {
+        console.log("Database update error:", error);
+        return res.status(400).json({ error: "Database update error" });
+      }
+      
+      // Query to retrieve the updated association with details
+      let selectQuery = `
+        SELECT hs.harvester_silo_id, hs.harvester_id, hs.silo_id,
+               h.model, h.base_city, s.city, s.spice_capacity
+        FROM Harvesters_Spice_Silos hs
+        JOIN Harvesters h ON hs.harvester_id = h.harvester_id
+        JOIN Spice_Silos s ON hs.silo_id = s.silo_id
+        WHERE hs.harvester_silo_id = ?
+      `;
+      
+      db.pool.query(selectQuery, [association_id], function(error, rows) {
+        if (error) {
+          console.log("Error fetching updated association:", error);
+          return res.status(400).json({ error: "Error fetching updated association" });
+        }
+        
+        if (rows.length > 0) {
+          let updatedAssociation = rows[0];
+          
+          // Create more readable description
+          updatedAssociation.harvester_info = `${updatedAssociation.model} (${updatedAssociation.base_city})`;
+          updatedAssociation.silo_info = `Silo ${updatedAssociation.silo_id} (${updatedAssociation.city}, Capacity: ${updatedAssociation.spice_capacity})`;
+          
+          console.log("Sending back updated association data:", updatedAssociation);
+          return res.status(200).json(updatedAssociation);
+        } else {
+          return res.status(404).json({ error: "Association not found after update" });
         }
       });
     });

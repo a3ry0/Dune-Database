@@ -22,7 +22,7 @@ function deleteShipmentSilo(shipment_silo_id) {
         }
         else if (xhttp.readyState == 4 && xhttp.status != 204) {
             console.log("There was an error with the delete operation.");
-            alert("Failed to delete association. Please try again.");
+            alert("The association already exists. Please try again.");
         }
     }
     // Send the request and wait for the response

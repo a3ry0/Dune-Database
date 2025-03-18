@@ -176,7 +176,7 @@ router.delete('/delete-shipment-ajax', function(req,res, next){
   });
 });
 
-// ====== SHIPMENT-SILO ASSOCIATION ROUTES ======
+// ====== shipment-silo association routes ======
 
 // Route: POST /shipments/add-shipment-silo-ajax - Add a new shipment-silo association
 router.post('/add-shipment-silo-ajax', function(req, res) {
