@@ -103,8 +103,7 @@
   <script src="/js/harvesters/update_harvester.js"></script>
   <script src="/js/harvesters/delete_harvester.js"></script>
   
-  <!-- harvester-silo association section -->
-<!-- HARVESTER-SILO ASSOCIATION SECTION -->
+<!-- harvester-silo association section -->
 <section>
   <h2>Manage Harvester-Silo Associations</h2>
   <table border="1" id="Harvesters-Silos-table">
@@ -171,7 +170,7 @@
   console.log("=== Starting editHarvesterSilo debug ===");
   console.log("Looking for association with ID:", association_id);
   
-  // First, let's inspect all rows to see if data attributes are present
+  // inspect all rows to see if data attributes are present
   console.log("Inspecting all rows in the table:");
   let allRows = document.querySelectorAll("#Harvesters-Silos-table tbody tr");
   console.log("Found", allRows.length, "rows in the table");
@@ -183,7 +182,7 @@
     console.log("  data-silo-id:", row.getAttribute("data-silo-id"));
   });
   
-  // Now let's try to find our specific row
+  // try to find specific row
   let row = document.querySelector(`tr[data-value='${association_id}']`);
   
   if (!row) {
@@ -213,12 +212,11 @@
   console.log("  data-harvester-id:", harvesterId);
   console.log("  data-silo-id:", siloId);
   
-  // If data attributes are null, let's try to extract from cells
+  // If data attributes are null, try to extract from cells
   if (!harvesterId || !siloId) {
     console.log("Data attributes are null, trying to extract from table cells instead");
     
-    // Let's try to extract the IDs from the harvester_info and silo_info
-    // This is a backup method and may not be reliable
+    // extract the IDs from the harvester_info and silo_info
     
     // First cell is the ID, second is harvester info, third is silo info
     let harvesterInfo = row.cells[1].textContent.trim();
@@ -227,7 +225,7 @@
     console.log("Harvester info cell:", harvesterInfo);
     console.log("Silo info cell:", siloInfo);
     
-    // Let's check the select options to find a match
+    // check the select options to find a match
     let harvesterSelect = document.getElementById("input-harvester-id");
     let siloSelect = document.getElementById("input-silo-id");
     
@@ -252,7 +250,7 @@
     }
   }
   
-  // If we still don't have IDs, we'll just use the first item in each dropdown as a fallback
+  // If we still don't have IDs, use the first item in each dropdown as a fallback
   if (!harvesterId) {
     console.log("Couldn't determine harvester ID, using first non-empty option as fallback");
     let harvesterSelect = document.getElementById("input-harvester-id");
@@ -530,12 +528,12 @@
       return;
     }
     
-    // Put our data we want to send in a javascript object
+    // Put data we want to send in a javascript object
     let data = {
       id: association_id
     };
 
-    // Setup our AJAX request
+    // Setup AJAX request
     var xhttp = new XMLHttpRequest();
     xhttp.open("DELETE", "/harvesters/delete-harvester-silo-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
