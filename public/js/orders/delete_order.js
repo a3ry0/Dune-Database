@@ -1,3 +1,8 @@
+// Citation for the following function:
+// Date: 2021
+// Adapted from CS 340 Starter code:
+// Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
 function deleteOrder(order_id) {
   if (!confirm("Are you sure you want to delete this order?")) {
     return;
