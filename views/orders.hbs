@@ -54,7 +54,7 @@
     <h2>Add New Order</h2>
     <form id="add-order-form-ajax">
       <label for="input-customer-id">Customer:</label>
-      <select id="input-customer-id" name="customer_id" required>
+      <select id="input-customer-id" name="customer_id">
         <option value="">--Select Customer--</option>
         {{#each customers}}
         <option value="{{this.customer_id}}">{{this.name}}</option>
@@ -88,7 +88,7 @@
       <input type="hidden" id="order-id-update" name="order_id">
 
       <label for="input-customer-id-update">Customer:</label>
-      <select id="input-customer-id-update" name="customer_id" required>
+      <select id="input-customer-id-update" name="customer_id">
         <option value="">--Select Customer--</option>
         {{#each customers}}
         <option value="{{this.customer_id}}">{{this.name}}</option>
