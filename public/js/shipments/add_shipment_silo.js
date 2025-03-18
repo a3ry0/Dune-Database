@@ -1,5 +1,5 @@
 // Get the objects we need to modify
-let addHarvesterSiloForm = document.getElementById('add-harvester-silo-form-ajax');
+let addShipmentSiloForm = document.getElementById('add-shipment-silo-form-ajax');
 
 // Modify the objects we need
 addShipmentSiloForm.addEventListener("submit", function (e) {
@@ -7,31 +7,31 @@ addShipmentSiloForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputHarvesterId = document.getElementById("input-harvester-id");
+    let inputShipmentId = document.getElementById("input-shipment-id");
     let inputSiloId = document.getElementById("input-silo-id");
 
     // Get the values from the form fields
-    let harvesterIdValue = inputHarvesterId.value;
+    let shipmentIdValue = inputShipmentId.value;
     let siloIdValue = inputSiloId.value;
 
     // Validate required fields
-    if (!harvesterIdValue || !siloIdValue) {
-        alert("Please select both a harvester and a silo");
+    if (!shipmentIdValue || !siloIdValue) {
+        alert("Please select both a shipment and a silo");
         return;
     }
 
     // Put data in a javascript object
     let data = {
-        harvester_id: harvesterIdValue,
+        shipment_id: shipmentIdValue,
         silo_id: siloIdValue
     }
     
     // Debug logging
-    console.log("Sending harvester-silo data:", data);
+    console.log("Sending shipment-silo data:", data);
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/harvesters/add-harvester-silo-ajax", true);
+    xhttp.open("POST", "/shipments/add-shipment-silo-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -51,10 +51,10 @@ addShipmentSiloForm.addEventListener("submit", function (e) {
                         addRowToTable(newAssociation);
                         
                         // Optional: show success message
-                        alert("Harvester-Silo association added successfully!");
+                        alert("Shipment-Silo association added successfully!");
                         
                         // Clear the input fields for another transaction
-                        inputHarvesterId.value = '';
+                        inputShipmentId.value = '';
                         inputSiloId.value = '';
                     } else {
                         console.error("Empty response received from server");
@@ -76,10 +76,10 @@ addShipmentSiloForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data));
 });
 
-// Creates a single row from an Object representing a single record from Harvesters_Spice_Silos
+// Creates a single row from an Object representing a single record from Shipments_Spice_Silos
 function addRowToTable(newAssociation) {
     // Get the table body
-    let tableBody = document.getElementById("Harvesters-Silos-table").getElementsByTagName("tbody")[0];
+    let tableBody = document.getElementById("Shipments-Silos-table").getElementsByTagName("tbody")[0];
     
     if (!tableBody) {
         console.error("Could not find table body");
@@ -88,24 +88,24 @@ function addRowToTable(newAssociation) {
 
     // Create a new row
     let row = document.createElement("tr");
-    row.setAttribute('data-value', newAssociation.harvester_silo_id);
+    row.setAttribute('data-value', newAssociation.shipment_silo_id);
 
     // Create table cells
     let idCell = document.createElement("td");
-    let harvesterCell = document.createElement("td");
+    let shipmentCell = document.createElement("td");
     let siloCell = document.createElement("td");
     let actionCell = document.createElement("td");
 
     // Fill cells with correct data
-    idCell.innerText = newAssociation.harvester_silo_id;
-    harvesterCell.innerText = newAssociation.harvester_info; // This comes from the server join
+    idCell.innerText = newAssociation.shipment_silo_id;
+    shipmentCell.innerText = newAssociation.shipment_info; // This comes from the server join
     siloCell.innerText = newAssociation.silo_info; // This comes from the server join
 
     // Create Delete button
     let deleteButton = document.createElement("button");
     deleteButton.innerText = "Delete";
     deleteButton.onclick = function() {
-        deleteShipmentSilo(newAssociation.harvester_silo_id);
+        deleteShipmentSilo(newAssociation.shipment_silo_id);
     };
 
     // Append buttons to action cell
@@ -113,12 +113,12 @@ function addRowToTable(newAssociation) {
 
     // Append cells to row
     row.appendChild(idCell);
-    row.appendChild(harvesterCell);
+    row.appendChild(shipmentCell);
     row.appendChild(siloCell);
     row.appendChild(actionCell);
 
     // Append row to table
     tableBody.appendChild(row);
     
-    console.log("New harvester-silo row added to table");
+    console.log("New shipment-silo row added to table");
 }

@@ -62,7 +62,7 @@
       <select id="input-order-id" name="order-id" required>
         <option value="">--Select Order--</option>
         {{#each orders}}
-        <option value="{{this.shipment_id}}">{{this.order_id}}</option>
+        <option value="{{this.order_id}}">{{this.order_id}}</option>
         {{/each}}
       </select><br><br>
       
@@ -95,10 +95,10 @@
       <input type="hidden" id="shipment-id-update" name="shipment-id">
 
       <label for="input-order-id-update">Order:</label>
-      <select id="input-order-id-update" name="order_id" required>
+      <select id="input-order-id-update" name="order-id" required>
         <option value="">--Select Order--</option>
         {{#each orders}}
-        <option value="{{this.shipment_id}}">{{this.order_id}}</option>
+        <option value="{{this.order_id}}">{{this.order_id}}</option>
         {{/each}}
       </select><br><br>
 
@@ -129,101 +129,57 @@
   <script src="./js/shipments/update_shipment.js"></script>
   <script src="./js/shipments/delete_shipment.js"></script>
 
+  <!-- SHIPTMENT-SILO ASSOCIATION SECTION -->
   <section>
     <h2>Manage Shipment-Silo Associations</h2>
-    <table border="1">
+    <table border="1" id="Shipments-Silos-table">
       <thead>
         <tr>
           <th>Association ID</th>
-          <th>Shipment ID</th>
-          <th>Silo ID</th>
+          <th>Shipment</th>
+          <th>Silo</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
+        {{#each associations}}
+        <tr data-value="{{this.shipment_silo_id}}">
+          <td>{{this.shipment_silo_id}}</td>
+          <td>{{this.shipment_info}}</td>
+          <td>{{this.silo_info}}</td>
           <td>
-            <button onclick="editRecord('shipment_silo', 1)">Edit</button>
-            <button onclick="deleteRecord('shipment_silo', 1)">Delete</button>
+            <button onclick="deleteShipmentSilo({{this.shipment_silo_id}})">Delete</button>
           </td>
         </tr>
-        <tr>
-          <td>2</td>
-          <td>1</td>
-          <td>3</td>
-          <td>
-            <button onclick="editRecord('shipment_silo', 2)">Edit</button>
-            <button onclick="deleteRecord('shipment_silo', 2)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>3</td>
-          <td>2</td>
-          <td>
-            <button onclick="editRecord('shipment_silo', 3)">Edit</button>
-            <button onclick="deleteRecord('shipment_silo', 3)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>4</td>
-          <td>3</td>
-          <td>
-            <button onclick="editRecord('shipment_silo', 4)">Edit</button>
-            <button onclick="deleteRecord('shipment_silo', 4)">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>5</td>
-          <td>4</td>
-          <td>
-            <button onclick="editRecord('shipment_silo', 5)">Edit</button>
-            <button onclick="deleteRecord('shipment_silo', 5)">Delete</button>
-          </td>
-        </tr>
+        {{/each}}
       </tbody>
     </table>
+
+
     <h3>Add Shipment-Silo Association</h3>
-    <form id="shipmentSiloForm">
-      <label for="assoc_shipment_id">Select Shipment:</label>
-      <select id="assoc_shipment_id" name="assoc_shipment_id" required>
-        <option value="1">Shipment 1 (HL-9001)</option>
-        <option value="2">Shipment 2 (HL-0211)</option>
-        <option value="3">Shipment 3 (HL-9001)</option>
+    <form id="add-shipment-silo-form-ajax">
+      <label for="input-shipment-id">Select Shipment:</label>
+      <select id="input-shipment-id" name="shipment_id" required>
+        <option value="">--Select Shipment--</option>
+        {{#each data}}
+        <option value="{{this.shipment_id}}"> Shipment {{this.shipment_id}} - Carrier {{this.carrier}}</option>
+        {{/each}}
       </select><br><br>
-  
-      <label for="assoc_silo_id">Select Silo:</label>
-      <select id="assoc_silo_id" name="assoc_silo_id" required>
-        <option value="1">Silo 1 (Arrakeen)</option>
-        <option value="2">Silo 2 (Carthag)</option>
-        <option value="3">Silo 3 (Arrakeen)</option>
+
+      <label for="input-silo-id">Select Silo:</label>
+      <select id="input-silo-id" name="silo_id" required>
+        <option value="">--Select Silo--</option>
+        {{#each silos}}
+        <option value="{{this.silo_id}}">Silo {{this.silo_id}} ({{this.city}})</option>
+        {{/each}}
       </select><br><br>
-  
+
       <button type="submit">Add Association</button>
     </form>
   </section>
-  <script>
-    document.getElementById('shipmentForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('New shipment submitted (static demo).');
-    });
-    document.getElementById('shipmentSiloForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('New shipment-silo association submitted (static demo).');
-    });
-    
-    function editRecord(recordType, id) {
-      alert("Edit " + recordType + " record with id " + id + " (static demo).");
-    }
-    
-    function deleteRecord(recordType, id) {
-      alert("Delete " + recordType + " record with id " + id + " (static demo).");
-    }
-  </script>
+
+ <!-- Load Harvester-Silo scripts -->
+  <script src="/js/shipments/add_shipment_silo.js"></script>
+  <script src="/js/shipments/delete_shipment_silo.js"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@ updateShipmentForm.addEventListener("submit", function (e) {
 
     // Get form field elements
     let shipmentId = document.getElementById("shipment-id-update").value;
-    let inputOrderId = document.getElementById("input-order-id-update");
+    let inputOrderId = document.getElementById("input-order-id-update").value;
     let inputShipmentDate = document.getElementById("input-shipment-date-update");
     let inputCarrier = document.getElementById("input-carrier-update");
     let inputTrackingNumber = document.getElementById("input-tracking-number-update");
@@ -16,7 +16,7 @@ updateShipmentForm.addEventListener("submit", function (e) {
     let inputQuantity = document.getElementById("input-quantity-update");
 
     // Get the values from the form fields
-    let orderIdValue = inputOrderId.value;
+    let orderIdValue = parseInt(inputOrderId);
     let shipmentDateValue = inputShipmentDate.value;
     let carrierValue = inputCarrier.value;
     let trackingNumberValue = inputTrackingNumber.value;
@@ -25,7 +25,7 @@ updateShipmentForm.addEventListener("submit", function (e) {
 
     // Validate required fields 
     if (!orderIdValue || !shipmentDateValue || !carrierValue || !trackingNumberValue || !shipmentStatusValue || !quantityValue) {
-        alert("Please fill out all required fields");
+        alert("Please fill out all required fields.");
         return;
     }
     
@@ -37,7 +37,7 @@ updateShipmentForm.addEventListener("submit", function (e) {
         carrier: carrierValue,
         tracking_number: trackingNumberValue,
         shipment_status: shipmentStatusValue,
-        quantity: parseFloat(quantityValue)
+        quantity: parseInt(quantityValue)
     }
     
     // Setup AJAX request
@@ -97,7 +97,7 @@ function editShipment(shipment_id) {
     let row = document.querySelector(`tr[data-value='${shipment_id}']`);
     
     // Extract current values from the row
-    let orderId = row.cells[1].innerText;
+    let orderId = parseInt(row.cells[1].innerText);
     let shipmentDate = row.cells[2].innerText;
     let carrier = row.cells[3].innerText;
     let trackingNumber = row.cells[4].innerText;

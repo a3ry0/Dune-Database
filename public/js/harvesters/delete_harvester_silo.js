@@ -1,4 +1,4 @@
-function deleteHarvesterSilo(harvester_silo_id) {
+function deleteShipmentSilo(harvester_silo_id) {
   if (!confirm("Are you sure you want to delete this harvester-silo association?")) {
     return;
   }
