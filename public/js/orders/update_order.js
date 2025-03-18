@@ -22,7 +22,7 @@ updateOrderForm.addEventListener("submit", function (e) {
     let destinationValue = inputDestination.value;
 
     // Ensure required fields are filled with validation
-    if (!customerIdValue || !orderDateValue || !totalQuantityValue || !orderStatusValue || !destinationValue) {
+    if (!orderDateValue || !totalQuantityValue || !orderStatusValue || !destinationValue) {
         alert("Please fill out all required fields");
         return;
     }
@@ -30,7 +30,7 @@ updateOrderForm.addEventListener("submit", function (e) {
     // Build data object to send
     let data = {
         order_id: orderId,
-        customer_id: customerIdValue,
+        customer_id: customerIdValue || null,
         order_date: orderDateValue,
         total_quantity: totalQuantityValue,
         order_status: orderStatusValue,

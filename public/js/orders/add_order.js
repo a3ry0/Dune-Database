@@ -22,14 +22,14 @@ addOrderForm.addEventListener("submit", function (e) {
     let destinationValue = inputDestination.value;
 
     // Validate required fields
-    if (!customerIdValue || !orderDateValue || !totalQuantityValue || !orderStatusValue || !destinationValue) {
+    if (!orderDateValue || !totalQuantityValue || !orderStatusValue || !destinationValue) {
         alert("Please fill out all required fields");
         return;
     }
 
     // Put data in a javascript object
     let data = {
-        customer_id: customerIdValue,
+        customer_id: customerIdValue || null,
         order_date: orderDateValue,
         total_quantity: totalQuantityValue,
         order_status: orderStatusValue,

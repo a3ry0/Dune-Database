@@ -1,3 +1,8 @@
+// Citation for the following file:
+// Date: 2021
+// Adapted from CS 340 Starter code:
+// Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
 const express = require('express');
 const router = express.Router();
 const db = require('../database/db-connector');
@@ -54,11 +59,13 @@ router.post('/add-spice-silo-form-ajax', function(req, res) {
           return res.status(400).json({ error: "Error fetching new silo" });
         } else {
           if (rows.length > 0) {
-            console.log("Sending back silo data:", rows[0]);
-            return res.status(200).json(rows[0]);
+            const newSilo = rows[0];
+            if (newSilo.last_inspection_date) {
+              newSilo.last_inspection_date = new Date(newSilo.last_inspection_date).toISOString().split('T')[0];
+            }
+            return res.status(200).json(newSilo);
           } else {
-            console.log("No silo found with ID:", newId);
-            return res.status(404).json({ error: "silo not found after insert" });
+            return res.status(404).json({ error: "Silo not found after insert" });
           }
         }
       });
@@ -100,7 +107,9 @@ router.put('/put-spice-silo-ajax', function(req, res, next){
           if (updatedRows.length > 0) {
             // Format date for JSON response
             let updatedSilo = updatedRows[0];
-            console.log("Sending back updated silo data:", updatedSilo);
+            if (updatedSilo.last_inspection_date) {
+              updatedSilo.last_inspection_date = new Date(updatedSilo.last_inspection_date).toISOString().split('T')[0];
+            }
             return res.status(200).json(updatedSilo);
           } else {
             return res.status(404).json({ error: "Silo not found after update" });

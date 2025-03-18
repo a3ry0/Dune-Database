@@ -6,10 +6,10 @@ const db = require('../database/db-connector');
 router.get('/', function(req, res) {
   // Query to get orders with customer names
   let query = `
-    SELECT o.*, c.name AS customer_name
-    FROM Orders o
-    JOIN Customers c ON o.customer_id = c.customer_id
-    ORDER BY o.order_id ASC;
+  SELECT o.*, IFNULL(c.name, 'N/A') AS customer_name
+  FROM Orders o
+  LEFT JOIN Customers c ON o.customer_id = c.customer_id
+  ORDER BY o.order_id ASC;
   `;
   
   // Query to get all customers for dropdown
@@ -51,7 +51,7 @@ router.post('/add-order-ajax', function(req, res) {
   console.log("Received POST request with data:", data);
   
   // Validate input data
-  if (!data.customer_id || !data.order_date || !data.total_quantity || !data.order_status || !data.destination) {
+  if (!data.order_date || !data.total_quantity || !data.order_status || !data.destination) {
     console.log("Missing required fields");
     return res.status(400).json({ error: "Missing required fields" });
   }
@@ -60,7 +60,7 @@ router.post('/add-order-ajax', function(req, res) {
                 VALUES (?, ?, ?, ?, ?)`;
 
   // Debug logging
-  console.log("Inserting with values:", [data.customer_id, data.order_date, data.total_quantity, data.order_status, data.destination]);
+  console.log("Inserting with values:", [data.customer_id || null, data.order_date, data.total_quantity, data.order_status, data.destination]);
 
   db.pool.query(query1, [data.customer_id, data.order_date, data.total_quantity, data.order_status, data.destination], function(error, results, fields) {
     if (error) {
@@ -73,9 +73,9 @@ router.post('/add-order-ajax', function(req, res) {
       
       // Query to retrieve the newly inserted order with customer name
       let query2 = `
-        SELECT o.*, c.name AS customer_name
+        SELECT o.*, IFNULL(c.name, 'N/A') AS customer_name
         FROM Orders o
-        JOIN Customers c ON o.customer_id = c.customer_id
+        LEFT JOIN Customers c ON o.customer_id = c.customer_id
         WHERE o.order_id = ?
       `;
       
@@ -105,14 +105,14 @@ router.put('/put-order-ajax', function(req, res, next){
   console.log("Received PUT request with data:", data);
   
   let order_id = parseInt(data.order_id);
-  let customer_id = data.customer_id;
+  let customer_id = data.customer_id || null;
   let order_date = data.order_date;
   let total_quantity = data.total_quantity;
   let order_status = data.order_status;
   let destination = data.destination;
 
   // Validate input data
-  if (!order_id || !customer_id || !order_date || !total_quantity || !order_status || !destination) {
+  if (!order_id || !order_date || !total_quantity || !order_status || !destination) {
     console.log("Missing required fields");
     return res.status(400).json({ error: "Missing required fields" });
   }
@@ -133,9 +133,9 @@ router.put('/put-order-ajax', function(req, res, next){
     } else {
       // Query to retrieve the updated order with customer name
       let querySelectUpdated = `
-        SELECT o.*, c.name AS customer_name
+        SELECT o.*, IFNULL(c.name, 'N/A') AS customer_name
         FROM Orders o
-        JOIN Customers c ON o.customer_id = c.customer_id
+        LEFT JOIN Customers c ON o.customer_id = c.customer_id
         WHERE o.order_id = ?
       `;
       
