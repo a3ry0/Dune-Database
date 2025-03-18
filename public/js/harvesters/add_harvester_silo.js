@@ -2,7 +2,7 @@
 let addHarvesterSiloForm = document.getElementById('add-harvester-silo-form-ajax');
 
 // Modify the objects we need
-addShipmentSiloForm.addEventListener("submit", function (e) {
+addHarvesterSiloForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault();
 
@@ -105,7 +105,7 @@ function addRowToTable(newAssociation) {
     let deleteButton = document.createElement("button");
     deleteButton.innerText = "Delete";
     deleteButton.onclick = function() {
-        deleteShipmentSilo(newAssociation.harvester_silo_id);
+        deleteHarvesterSilo(newAssociation.harvester_silo_id);
     };
 
     // Append buttons to action cell
