@@ -1,3 +1,8 @@
+// Citation for the following file:
+// Date: 2021
+// Adapted from CS 340 Starter code:
+// Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
 // Get the update customer form element
 let updateCustomerForm = document.getElementById('update-customer-form-ajax');
 

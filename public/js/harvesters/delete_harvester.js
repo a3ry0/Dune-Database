@@ -1,26 +1,7 @@
-// Function to delete a harvester row from the table
-function deleteHarvesterFromTable(harvester_id) {
-  let table = document.getElementById("Harvesters-table");
-  for (let i = 0, row; row = table.rows[i]; i++) {
-    if (table.rows[i].getAttribute("data-value") == harvester_id) {
-      table.deleteRow(i);
-      
-      // Also remove from harvester dropdown in association section if it exists
-      let dropdown = document.getElementById("input-harvester-id");
-      if (dropdown) {
-        for (let j = 0; j < dropdown.options.length; j++) {
-          if (dropdown.options[j].value == harvester_id) {
-            dropdown.remove(j);
-            break;
-          }
-        }
-      }
-      
-      console.log("Harvester row deleted");
-      break;
-    }
-  }
-}
+// Citation for the following file:
+// Date: 2021
+// Adapted from CS 340 Starter code:
+// Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 function deleteHarvester(harvester_id) {
   // Confirm deletion with the user
